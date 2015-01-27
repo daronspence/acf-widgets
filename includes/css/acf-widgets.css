@@ -1,0 +1,27 @@
+/*** Widgets.php Admin Page Styles ***/
+.acf-field.field_key-field_acfw_default_widget, .acf-field.field_key-field_acfw_other_widgets {
+	background: rgba(255, 191, 0, 0.025);
+	padding: 10px;
+	border-left: 4px solid lightgreen;
+}
+/*** CPT Styles ***/
+.post-type-acf-widgets #postexcerpt .inside p {
+	display: none;
+}
+.acfw-no-acf[data-display]{
+	display: none;
+}
+/*** Options Page Styles ***/
+.settings_page_acfw-options span {
+	text-transform: uppercase;
+}
+.settings_page_acfw-options span.valid{
+	color: #7ad03a;
+	font-weight: bold;
+}
+.settings_page_acfw-options span.invalid, .settings_page_acfw-options span.expired {
+	color: red;
+}
+.settings_page_acfw-options span.deactivated {
+	color: orange;
+}

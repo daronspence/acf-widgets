@@ -1,0 +1,101 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: acfw\n"
+"POT-Creation-Date: 2014-10-27 01:20-0600\n"
+"PO-Revision-Date: 2014-10-27 01:21-0600\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-Basepath: ../../\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: includes\n"
+
+#: includes/acf-404.php:15
+msgid ""
+"ACF Widgets Requires ACF to function. Please activate ACF v5 to remove this "
+"message."
+msgstr ""
+
+#: includes/admin-setup.php:24 includes/admin-setup.php:39
+#: includes/admin-setup.php:41
+msgid "Widgets"
+msgstr ""
+
+#: includes/admin-setup.php:25
+msgid "Widgets created with the ACF Widgets Plugin."
+msgstr ""
+
+#: includes/admin-setup.php:40
+msgid "Widget"
+msgstr ""
+
+#: includes/admin-setup.php:42
+msgid "Add Widget"
+msgstr ""
+
+#: includes/admin-setup.php:43
+msgid "Add New Widget"
+msgstr ""
+
+#: includes/admin-setup.php:44
+msgid "Edit"
+msgstr ""
+
+#: includes/admin-setup.php:45
+msgid "Edit Widget"
+msgstr ""
+
+#: includes/admin-setup.php:46
+msgid "New Widget"
+msgstr ""
+
+#: includes/admin-setup.php:47 includes/admin-setup.php:48
+msgid "View Widget"
+msgstr ""
+
+#: includes/admin-setup.php:49
+msgid "Search Widgets"
+msgstr ""
+
+#: includes/admin-setup.php:50
+msgid "No Widgets Found"
+msgstr ""
+
+#: includes/admin-setup.php:51
+msgid "No Widgets Found in Trash"
+msgstr ""
+
+#: includes/admin-setup.php:52
+msgid "Parent Widget"
+msgstr ""
+
+#: includes/admin-setup.php:61
+msgid "ACF Widgets Options"
+msgstr ""
+
+#: includes/admin-setup.php:62
+msgid "ACF Widgets"
+msgstr ""
+
+#: includes/default-widgets.php:59
+msgid "Custom Field Location"
+msgstr ""
+
+#: includes/default-widgets.php:67
+msgid "Before Title"
+msgstr ""
+
+#: includes/default-widgets.php:68
+msgid "After Title (title required)"
+msgstr ""
+
+#: includes/default-widgets.php:69
+msgid "After Widget"
+msgstr ""
