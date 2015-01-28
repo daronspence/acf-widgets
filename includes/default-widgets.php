@@ -32,7 +32,7 @@ function acfw_wp_defaults( $params ) {
 			require(locate_template("widget-". $widget_name . ".php", false));
 		$template = ob_get_clean();
 	}
-	if ( get_option('acfw_debug') ){
+	if ( get_option('acfw_debug') && !defined('ACFW_INCLUDE') ){
 		$template .= "<br>Looking for template:<b> 'widget-" . $widget_name . ".php'</b><br>";
 	}
 	
