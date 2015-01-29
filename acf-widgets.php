@@ -18,6 +18,7 @@ if ( !defined('ABSPATH') ){
 define( 'ACFW_VERSION', 1.2 );
 define( 'ACFW_STORE_URL', 'http://acfwidgets.com' );
 define( 'ACFW_ITEM_NAME', 'ACF Widgets' );
+define( 'ACFW_FILE' , __FILE__ );
 
 add_action('after_setup_theme', 'acfw_globals');
 function acfw_globals(){
@@ -77,5 +78,6 @@ function acfw_activate(){
 		delete_user_meta( $user->id, 'acfw_dismiss_expired' );
 	}
 }
+
 
 // End of File

@@ -1,37 +1,16 @@
 <?php
 // Block direct requests
-if ( !defined('ABSPATH') ){
+if ( !defined('ABSPATH') )
 	die();	
-}
 
-$installed_plugins = array();
-// check if ACF is installed
-if ( is_multisite() ) :
-
-	$network_plugins = get_site_option( 'active_sitewide_plugins', array() );
-	$site_plugins = get_option( 'active_plugins', array() );
-	$installed_plugins = array_merge($network_plugins, $site_plugins);
-
-else :
-
-	$installed_plugins = get_option( 'active_plugins', array() );
-
-endif;
-
-foreach($installed_plugins as $key => $value ){
-	if ( strpos($key, 'acf.php') !== false || strpos($value, 'acf.php') !== false ){
-		$acf_active = true;
-		return;
-	}
-}
-
-
-add_action('after_setup_theme', 'acf_check_404');
+add_action('init', 'acf_check_404');
 function acf_check_404(){
-	global $acf;
-	if ( !isset( $acf ) || intval(explode('.', $acf->settings['version'])[0]) < 5 ){
+	if ( function_exists('acf') )
+		$acf = acf();
+
+	// not set or < v5 of ACF
+	if ( !isset( $acf ) || version_compare($acf->settings['version'], '5.0', '<') )
 		add_action( 'admin_notices', 'acf_404' );
-	}
 }
 
 // displays admin warning message

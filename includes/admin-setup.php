@@ -77,11 +77,12 @@ function acfw_how_to_meta_box( $post ) {
 	if ($title == ''){
 		_e('For more information, give your widget a title, then Publish or Update this page.', 'acfw');
 	} else {
-		echo '<p>Before you can use this widget, you will need to <a href="edit.php?post_type=acf-field-group">add some custom fields</a> to it. Add a new field group and set the <i>Location</i> equal to:<br><b>Widget is equal to ' . $post->post_title . '</b>.</p>';
-		echo '<p>To show this widget in your theme, add a new template file to your theme directory named <strong>widget-' . $post->post_name .'.php</strong> or <strong>widget-' . $post->ID .'.php</strong> .</p>';
-		echo '<p>You can show the values from your widgets in your templates by using the following syntax.</p>';
-		echo '<code>&lt;?php the_field(\'YOUR_FIELD_NAME\', $acfw); ?&gt;</code>';
-		echo '<p><a href="https://www.youtube.com/watch?v=YRfvqmSQG7o" target="_blank">Watch Tutorial</a> or <a href="http://acfwidgets.com/support/">Read More</a></p>';
+		echo "<p>Before you can use this widget, you will need to <a href='edit.php?post_type=acf-field-group'>add some custom fields</a> to it.</p>";
+		echo "<p>Add a new field group and set the <i>Location</i> equal to: <b>Widget is equal to {$post->post_title}</b>.</p>";
+		echo "<p>To show this widget in your theme, add a new template file to your theme directory named <strong>widget-{$post->post_name}.php</strong> or <strong>widget-{$post->ID}.php</strong> .</p>";
+		echo "<p>You can show the values from your widgets in your templates by using the following syntax.</p>";
+		echo "<code>&lt;?php the_field(\'YOUR_FIELD_NAME\', \$acfw); ?&gt;</code>";
+		echo "<p><a href='https://www.youtube.com/watch?v=YRfvqmSQG7o' target='_blank'>Watch Tutorial</a> or <a href='http://acfwidgets.com/support/'>Read More</a></p>";
 	}
 }
 
@@ -117,7 +118,7 @@ function acfw_options_page(){
 				update_option( 'acfw_license_key', '');
 			} elseif ( isset($_POST['activate']) ){ 
 				$status = acfw_activate_license(trim($_POST['acfwlicensekey']));
-				if ( $status != 'invalid')
+				if ( $status->license != 'invalid' || $status->error == 'expired')
 					update_option( 'acfw_license_key', trim($_POST['acfwlicensekey']) );
 			} 
 
@@ -139,8 +140,7 @@ function acfw_options_page(){
 	?>
 <div class="wrap">
 	<h2>ACFW Options</h2>
-	<form name="acfw-options" method="post">
-	<input type="hidden" name="action" value="some-action">
+	<form name="acfw-options" method="post" action="?page=<?php echo $_GET['page']; ?>&updated=1">
     <?php wp_nonce_field( 'acfw_options_nonce' ); ?>
 		<div id="poststuff">
 			<div id="post-body" class="metabox-holder columns-<?php echo 1 == get_current_screen()->get_columns() ? '1' : '2'; ?>">
@@ -264,7 +264,7 @@ function acfw_login_check($login, $user){
 // Display ACFW notices
 add_action( 'admin_init', 'acfw_admin_notices' );
 function acfw_admin_notices(){
-	if ( ( isset($_GET['page']) && $_GET['page'] == 'acfw-options' ) || defined('ACFW_INCLUDE') )
+	if ( ( isset($_GET['page']) && $_GET['page'] == 'acfw-options' ) || defined('ACFW_INCLUDE') || defined('ACFW_LITE') )
 		return;
 
 	global $current_user;
@@ -277,5 +277,24 @@ function acfw_admin_notices(){
 		add_action('admin_notices', 'acfw_expired_notice');
 } // End ACFW notices
 
+if ( $_SERVER['REQUEST_URI'] == "/wp-admin/plugins.php" && !defined('ACFW_INCLUDE') ){
+	add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 10);
+}
+
+function acfw_plugins_page_info(){
+	$status = get_option('acfw_license_status');
+	if ( $status == 'valid' )
+		return;
+	
+	$wp_list_table = _get_list_table( 'WP_Plugins_List_Table' );
+	$key = get_option('acfw_license_key');
+	$acfw_message = '';
+
+	if ( $status == 'expired' )
+		$acfw_message .= 'Your license is expired. <a href="http://acfwidgets.com/checkout/?edd_license_key='. $key .'&download_id=13" target="_blank">Renew it now</a> to continue receiving updates &amp; support. Contact your web developer for more information.';
+	if ( ($status == 'invalid' || $key == '') && !defined('ACFW_LITE') )
+		$acfw_message .= 'It seems like there is a problem with your license. Check your options in <i>Settings &gt; ACFW Options</i>';
+	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div class='update-message'>{$acfw_message}</div></td></tr>";
+}
 
 // End of File

@@ -93,7 +93,7 @@ function acfw_activate_license($lk){
 	update_option('acfw_license_status', $license_data->license );
 	update_option('acfw_license_count', $license_data->activations_left);
 
-	return $license_data->license;
+	return $license_data;
 }
 
 function acfw_check_license(){
