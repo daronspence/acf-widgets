@@ -67,7 +67,6 @@ function acfw_deactivate_license(){
 	$deactivate_response = wp_remote_get( add_query_arg( $api_params, ACFW_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
 	$license_data = json_decode( wp_remote_retrieve_body( $deactivate_response ) );
 	update_option('acfw_license_status', $license_data->license );
-	update_option('acfw_license_count', get_option('acfw_license_count') + 1);
 }
 
 function acfw_activate_license($lk){

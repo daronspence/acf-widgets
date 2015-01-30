@@ -158,9 +158,9 @@ function acfw_options_page(){
 								echo '<p>While your license is either deactivated or invalid, you will not recieve any updates.</p>';
 							}
 							echo '<p>' . 'License Key: ' . "<span class='{$status}'>" . $status . '</span></p>';
-							if( $count < 1 && $count != 'unlimited' ){
+							if( $count === '0' && ($status == 'expired' || $status == 'valid') ){
 								echo '<p>You have no more licenses remaining. Consider <a href="http://acfwidgets.com/checkout/purchase-history/">deactivating some</a> or <a href="http://acfwidgets.com/checkout?edd_action=add_to_cart&download_id=13&edd_options[price_id]=3">purchasing a developers license</a>.</p>';
-							} elseif ( $count = 'unlimited'){
+							} elseif ( $count == 'unlimited' && ($status == 'expired' || $status == 'valid') ){
 								echo '<p>Thank you for purchasing a developer license! If you need help, check out the <a href="http://acfwidgets.com/support/forum/priority-support/" target="_blank">Priority Support Forums</a>.</p>';
 							}
 							if($status == 'expired'){
