@@ -12,27 +12,25 @@ if ( !defined('ABSPATH') ){
 add_action('after_setup_theme', 'acfw_setup_classes');
 function acfw_setup_classes(){
 	
-	global $wpdb;
-	$results = $wpdb->get_results( 
-		"
-		SELECT ID, post_name, post_title, post_excerpt
-		FROM $wpdb->posts 
-		WHERE post_type = 'acf-widgets'
-			AND post_status = 'publish'
-		"
-	);
+	$acfw_query = new WP_Query(array(
+		'post_type' => 'acf-widgets',
+		// shouldn't have more than 100 widgets...but just in case
+		'post_count' => apply_filters('acfw_query_count', 100),
+		'post_status' => 'publish'
+	));
+
+	$results = $acfw_query->posts;
 	
 	foreach ($results as $result) :
 		
 		$title = $result->post_title;
-		$slug = $result->post_name;
 		$description = $result->post_excerpt;
+		$slug = $result->post_name;
 		$id = $result->ID;
 
 		acfw_widgets_eval($title, $description, $slug, $id);
 
-	endforeach;
-	
+	endforeach;	
 } // end acfw_setup_classes()
 
 
@@ -53,8 +51,5 @@ function acfw_included_widgets(){
 		endforeach;
 	endif;
 } // End included widgets
-
-
-
 
 // End of File
