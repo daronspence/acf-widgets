@@ -9,8 +9,10 @@ function acf_check_404(){
 		$acf = acf();
 
 	// not set or < v5 of ACF
-	if ( !isset( $acf ) || version_compare($acf->settings['version'], '5.0', '<') )
+	if ( !isset( $acf ) || version_compare($acf->settings['version'], '5.0', '<') ){
 		add_action( 'admin_notices', 'acf_404' );
+		add_action( 'network_admin_notices', 'acf_404' );
+	}
 }
 
 // displays admin warning message

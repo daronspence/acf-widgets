@@ -176,9 +176,12 @@ function acfw_widgets_eval( $title, $description, $slug, $id){
 } // end acfw_widgets_eval();
 
 function acfw_expired_notice(){
+	$url = "options-general.php?page=acfw-options";
+	if ( is_multisite() )
+		$url = "settings.php?page=acfw-options";
 ob_start(); ?>
-	<div class="update-nag">
-        <p>Your copy of ACF Widgets is expired. Please <a href="options-general.php?page=acfw-options">renew your license</a> to continue recieving updates. <a href="?acfw-dismiss-expired=1" style="text-decoration: none;"><i class="dashicons dashicons-dismiss" style="font-size: inherit; padding-top: 3px;"></i>Dismiss</a></p>
+	<div class="error">
+        <p>Your copy of ACF Widgets is expired. Please <a href="<?php echo $url; ?>">renew your license</a> to continue recieving updates. <a href="?acfw-dismiss-expired=1" style="text-decoration: none;"><i class="dashicons dashicons-dismiss" style="font-size: inherit; padding-top: 3px;"></i>Dismiss</a></p>
     </div>
 <?php echo ob_get_clean();
 }

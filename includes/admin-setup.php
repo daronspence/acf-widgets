@@ -103,9 +103,12 @@ function acfw_support_meta_box_html(){ ?>
 
 // Add ACFW Options Page
 add_action('admin_menu','acfw_menu_items');
+add_action('network_admin_menu', 'acfw_menu_items');
 function acfw_menu_items(){
 	if ( !defined('ACFW_LITE') ){
 		add_options_page( 'ACFW Options', 'ACFW Options', 'edit_posts', 'acfw-options', 'acfw_options_page' );
+		if ( is_network_admin() )
+			add_submenu_page( 'settings.php', 'ACFW Options', 'ACFW Options', 'edit_posts', 'acfw-options', 'acfw_options_page' );
 	}
 }
 function acfw_options_page(){ 
@@ -273,12 +276,14 @@ function acfw_admin_notices(){
 	if ( isset($_GET['acfw-dismiss-expired']) && $_GET['acfw-dismiss-expired'] == '1' )
 		update_user_meta( $user_id, 'acfw_dismiss_expired', array(true , ACFW_VERSION) );
 	
-	if ( get_option('acfw_license_status') == 'expired' && !get_user_meta($user_id, 'acfw_dismiss_expired')[0] )
+	if ( get_option('acfw_license_status') == 'expired' && !get_user_meta($user_id, 'acfw_dismiss_expired')[0] ){
 		add_action('admin_notices', 'acfw_expired_notice');
+		add_action('network_admin_notices', 'acfw_expired_notice');
+	}
 } // End ACFW notices
 
-if ( $_SERVER['REQUEST_URI'] == "/wp-admin/plugins.php" && !defined('ACFW_INCLUDE') ){
-	add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 10);
+if ( ($_SERVER['DOCUMENT_URI'] == "/wp-admin/plugins.php" || $_SERVER['DOCUMENT_URI'] == "/wp-admin/network/plugins.php") && !defined('ACFW_INCLUDE') ){
+	add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 11);
 }
 
 function acfw_plugins_page_info(){
@@ -291,10 +296,11 @@ function acfw_plugins_page_info(){
 	$acfw_message = '';
 
 	if ( $status == 'expired' )
-		$acfw_message .= 'Your license is expired. <a href="http://acfwidgets.com/checkout/?edd_license_key='. $key .'&download_id=13" target="_blank">Renew it now</a> to continue receiving updates &amp; support. Contact your web developer for more information.';
+		$acfw_message .= 'Your ACFW license is expired. <a href="http://acfwidgets.com/checkout/?edd_license_key='. $key .'&download_id=13" target="_blank">Renew it now</a> to continue receiving updates &amp; support. Contact your web developer for more information.';
 	if ( ($status == 'invalid' || $key == '') && !defined('ACFW_LITE') )
-		$acfw_message .= 'It seems like there is a problem with your license. Check your options in <i>Settings &gt; ACFW Options</i>';
-	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div class='update-message'>{$acfw_message}</div></td></tr>";
+		$acfw_message .= 'It seems like there is a problem with your ACFW license. Check your options in <i>Settings &gt; ACFW Options</i>';
+	
+	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div style='background: #fcf3ef; padding: 5px 8px; border-left: 4px solid crimson;'><span class='dashicons dashicons-dismiss' style='color: crimson; margin-right: 13px;'></span>{$acfw_message}</div></td></tr>";
 }
 
 // End of File

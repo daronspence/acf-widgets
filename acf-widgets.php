@@ -29,7 +29,6 @@ function acfw_globals(){
 }
 
 // Check to see if ACF is active
-$acf_active = false;
 include_once('includes/acf-404.php');
 
 
@@ -43,8 +42,6 @@ include_once('includes/admin-setup.php');
 include_once('includes/widgets-setup.php');
 
 include_once('includes/default-widgets.php');
-
-// include_once('includes/updates.php');
 
 
 if( !class_exists( 'EDD_SL_Plugin_Updater' ) ) {
@@ -67,7 +64,7 @@ function acfw_plugin_updater() {
 	);
 
 }
-if(!defined('ACFW_INCLUDE')){
+if(!defined('ACFW_INCLUDE') && get_option('acfw_license_key') != ''){
 	add_action( 'admin_init', 'acfw_plugin_updater', 0 );
 }
 
