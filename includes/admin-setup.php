@@ -282,7 +282,7 @@ function acfw_admin_notices(){
 	}
 } // End ACFW notices
 
-if ( ($_SERVER['DOCUMENT_URI'] == "/wp-admin/plugins.php" || $_SERVER['DOCUMENT_URI'] == "/wp-admin/network/plugins.php") && !defined('ACFW_INCLUDE') ){
+if ( ($_SERVER['SCRIPT_NAME'] == "/wp-admin/plugins.php" || $_SERVER['SCRIPT_NAME'] == "/wp-admin/network/plugins.php") && !defined('ACFW_INCLUDE') ){
 	add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 11);
 }
 
