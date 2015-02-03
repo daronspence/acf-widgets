@@ -67,9 +67,10 @@ function acfw_register_field_group(){
 	// Render location for default widgets
 	$df_widgets = acfw_location_rules($default_widgets, 'widget', '==', true);
 	
-	if ( function_exists('get_field') ):
+	global $wp_customize;
+	if ( function_exists('get_field') && !isset($wp_customize) ):
 	register_field_group(array (
-		'key' => 'group_544be607c3225',
+		'key' => 'group_acfw_default_widget',
 		'title' => 'ACF Widgets Location',
 		'fields' => array (
 			array (
@@ -108,6 +109,9 @@ function acfw_register_field_group(){
 		'hide_on_screen' => '',
 	));	
 	endif;	
+	if (isset($wp_customize)){
+		add_action('in_widget_form', 'acfw_go_back', 1, 1);
+	}
 } // end acf_widgets_register_field_group()
 
 
@@ -140,7 +144,7 @@ function acfw_other_widgets(){
 	// Register ACFW Field for all other Widgets
 	if ( function_exists('get_field') ):
 	register_field_group(array (
-		'key' => 'group_54515dcd6451b',
+		'key' => 'group_acfw_other_widgets',
 		'title' => 'Other Widgets',
 		'fields' => array (
 			array (

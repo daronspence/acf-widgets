@@ -9,4 +9,8 @@ function acfw(){
 		remove.attr('data-display', 'none');
 	}
 }
+function acfw_remove_fields(){ 
+	var $ = jQuery;
+	$('.widget .acf-field').remove(); 
+}
 jQuery(document).ready( acfw );

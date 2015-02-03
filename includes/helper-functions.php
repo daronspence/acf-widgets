@@ -142,7 +142,12 @@ function acfw_widgets_eval( $title, $description, $slug, $id){
 	                        );
 	            \$this->WP_Widget('{$name}', '{$title}', \$widget_ops );           
 	        }
-	        function form(\$instance) { 
+	        function form(\$instance) {
+	        	global \$wp_customize;
+	        	if ( isset(\$wp_customize) ) {
+	        		echo '<p>Sorry, this widget is not availabe to edit from the Customizer. Please go back to the <a href=\"widgets.php\">Widgets Page</a> to edit.</p>';
+	        		return;
+	        	}
 				echo '<p class=\'acfw-no-acf\'>You have not added any fields to this widget yet. 
 				<br/><br/><a href=post-new.php?post_type=acf-field-group>Add some now!</a>
 				<br/><br/> Make sure to set the location rules to: <b>Widget : is equal to : {$title} </b></p><br/>';
@@ -186,4 +191,12 @@ ob_start(); ?>
 <?php echo ob_get_clean();
 }
 
+function acfw_go_back($widget){ 
+	if ( strpos($widget->id_base, 'acf_widget') !== false ):
+		return;
+	else : ?>
+	<p>ACFW Location Rules &amp; ACF Fields are not available within the Customizer. Please go to <a href="widgets.php">Widgets.php</a> to edit them.</p>
+	<script type="text/javascript">jQuery(document).ready( function(){ acfw_remove_fields(); });</script>
+<?php endif;
+}
 
