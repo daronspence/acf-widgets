@@ -280,11 +280,12 @@ function acfw_admin_notices(){
 		add_action('admin_notices', 'acfw_expired_notice');
 		add_action('network_admin_notices', 'acfw_expired_notice');
 	}
-} // End ACFW notices
 
-if ( ($_SERVER['SCRIPT_NAME'] == "/wp-admin/plugins.php" || $_SERVER['SCRIPT_NAME'] == "/wp-admin/network/plugins.php") && !defined('ACFW_INCLUDE') ){
-	add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 11);
-}
+	global $pagenow;
+	if ( $pagenow == 'plugins.php' && !defined('ACFW_INCLUDE') ){
+		add_action("after_plugin_row_" . plugin_basename(ACFW_FILE), 'acfw_plugins_page_info', 11, 3);
+	}
+} // End ACFW notices
 
 function acfw_plugins_page_info(){
 	$status = get_option('acfw_license_status');
