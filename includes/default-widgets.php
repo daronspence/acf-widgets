@@ -109,6 +109,7 @@ function acfw_register_field_group(){
 		'hide_on_screen' => '',
 	));	
 	endif;	
+	
 	if (isset($wp_customize)){
 		add_action('in_widget_form', 'acfw_go_back', 1, 1);
 	}
@@ -141,8 +142,9 @@ function acfw_other_widgets(){
 	$all = array( 'param' => 'widget', 'operator' => '==', 'value' => 'all' );
 	array_push($removed_widgets[0], $all);
 
+	global $wp_customize;
 	// Register ACFW Field for all other Widgets
-	if ( function_exists('get_field') ):
+	if ( function_exists('get_field') && !isset($wp_customize) ):
 	register_field_group(array (
 		'key' => 'group_acfw_other_widgets',
 		'title' => 'Other Widgets',
@@ -182,6 +184,10 @@ function acfw_other_widgets(){
 		'hide_on_screen' => '',
 	) );
 	endif;
+
+	if (isset($wp_customize)){
+		add_action('in_widget_form', 'acfw_go_back', 1, 1);
+	}
 } // End acfw_other_widgets()
 
 // End of File
