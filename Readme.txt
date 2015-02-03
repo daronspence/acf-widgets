@@ -22,4 +22,4 @@ That's it!
 
 If you're interested, the normal filters are still available like $before and $after widget.
 
-I can't wait to see what people make with this! 
+I can't wait to see what people make with this! :)
