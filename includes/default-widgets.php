@@ -61,14 +61,14 @@ function acfw_wp_defaults( $params ) {
 
 // Add ACFW to WP Widgets w/ before/after title
 add_action('init', 'acfw_register_field_group');
-function acfw_register_field_group(){		
+function acfw_register_field_group(){	
+
 	// vars
 	$default_widgets = $GLOBALS['acfw_default_widgets'];
 	// Render location for default widgets
 	$df_widgets = acfw_location_rules($default_widgets, 'widget', '==', true);
 	
-	global $wp_customize;
-	if ( function_exists('get_field') && !isset($wp_customize) ):
+	if ( function_exists('get_field') ):
 	register_field_group(array (
 		'key' => 'group_acfw_default_widget',
 		'title' => 'ACF Widgets Location',
@@ -110,9 +110,6 @@ function acfw_register_field_group(){
 	));	
 	endif;	
 	
-	if (isset($wp_customize)){
-		add_action('in_widget_form', 'acfw_go_back', 1, 1);
-	}
 } // end acf_widgets_register_field_group()
 
 
@@ -142,9 +139,8 @@ function acfw_other_widgets(){
 	$all = array( 'param' => 'widget', 'operator' => '==', 'value' => 'all' );
 	array_push($removed_widgets[0], $all);
 
-	global $wp_customize;
 	// Register ACFW Field for all other Widgets
-	if ( function_exists('get_field') && !isset($wp_customize) ):
+	if ( function_exists('get_field') ):
 	register_field_group(array (
 		'key' => 'group_acfw_other_widgets',
 		'title' => 'Other Widgets',
@@ -185,9 +181,6 @@ function acfw_other_widgets(){
 	) );
 	endif;
 
-	if (isset($wp_customize)){
-		add_action('in_widget_form', 'acfw_go_back', 1, 1);
-	}
 } // End acfw_other_widgets()
 
 // End of File

@@ -128,7 +128,7 @@ function acfw_plugins_url($dir, $rel){
 		return plugins_url($dir, $rel);
 }
 
-function acfw_widgets_eval( $title, $description, $slug, $id){
+function acfw_widgets_eval( $title, $description, $slug, $id ){
 	$name = 'Acf_Widget_'.$id;
 
 	// TODO: Rewrite this without using eval()
@@ -145,7 +145,6 @@ function acfw_widgets_eval( $title, $description, $slug, $id){
 	        function form(\$instance) {
 	        	global \$wp_customize;
 	        	if ( isset(\$wp_customize) ) {
-	        		echo '<p>Sorry, this widget is not availabe to edit from the Customizer. Please go back to the <a href=\"widgets.php\">Widgets Page</a> to edit.</p>';
 	        		return;
 	        	}
 				echo '<p class=\'acfw-no-acf\'>You have not added any fields to this widget yet. 
@@ -186,17 +185,53 @@ function acfw_expired_notice(){
 		$url = "settings.php?page=acfw-options";
 ob_start(); ?>
 	<div class="error">
-        <p>Your copy of ACF Widgets is expired. Please <a href="<?php echo $url; ?>">renew your license</a> to continue recieving updates. <a href="?acfw-dismiss-expired=1" style="text-decoration: none;"><i class="dashicons dashicons-dismiss" style="font-size: inherit; padding-top: 3px;"></i>Dismiss</a></p>
+        <p>Your copy of ACF Widgets is expired. Please <a href="<?php echo $url; ?>">renew your license</a> to continue recieving updates. <a href="<?php echo add_query_arg( 'acfw-dismiss-expired', 1 ); ?>" style="text-decoration: none;"><i class="dashicons dashicons-dismiss" style="font-size: inherit; padding-top: 3px;"></i>Dismiss</a></p>
     </div>
 <?php echo ob_get_clean();
 }
 
 function acfw_go_back($widget){ 
-	if ( strpos($widget->id_base, 'acf_widget') !== false ):
-		return;
-	else : ?>
+	if ( strpos($widget->id_base, 'acf_widget') !== false ): ?>
+		<p>Sorry, this widget is not availabe to edit from the Customizer. Please go back to the <a href="widgets.php">Widgets Page</a> to edit.</p>
+<?php else : ?>
 	<p>ACFW Location Rules &amp; ACF Fields are not available within the Customizer. Please go to <a href="widgets.php">Widgets.php</a> to edit them.</p>
-	<script type="text/javascript">jQuery(document).ready( function(){ acfw_remove_fields(); });</script>
 <?php endif;
 }
 
+add_action('init', 'acfw_remove_fields');
+function acfw_remove_fields(){
+	global $wp_customize;
+	if ( isset($wp_customize ) ){
+		acfw_remove_object_filter('in_widget_form', 'acf_form_widget', 'edit_widget', 10);
+		add_action('in_widget_form', 'acfw_go_back', 1, 1);
+	} else {
+		return;
+	}
+}
+
+// See http://wordpress.stackexchange.com/questions/137688/remove-actions-filters-added-via-anonymous-functions
+function acfw_remove_object_filter( $tag, $class, $method = NULL, $priority = NULL ) {
+	$filters = $GLOBALS['wp_filter'][ $tag ];
+	if ( empty ( $filters ) ) {
+		return;
+	}
+  	foreach ( $filters as $p => $filter ) :
+	    if ( ! is_null($priority) && ( (int) $priority !== (int) $p ) ) continue;
+	    $remove = FALSE;
+	    foreach ( $filter as $identifier => $function ) {
+	      $function = $function['function'];
+
+			if ( is_array( $function ) 
+				&& ( is_a( $function[0], $class ) || ( is_array( $function ) 
+					&& $function[0] === $class ) ) ) :
+				$remove = ( $method && ( $method === $function[1] ) );
+			elseif ( $function instanceof Closure && $class === 'Closure' ) :
+				$remove = TRUE;
+			endif;
+
+			if ( $remove ) {
+	        	unset( $GLOBALS['wp_filter'][$tag][$p][$identifier] );
+	      	}
+	    }
+	endforeach;
+}
