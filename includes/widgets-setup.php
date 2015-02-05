@@ -15,7 +15,7 @@ function acfw_setup_classes(){
 	$acfw_query = new WP_Query(array(
 		'post_type' => 'acf-widgets',
 		// shouldn't have more than 100 widgets...but just in case
-		'post_count' => apply_filters('acfw_query_count', 100),
+		'posts_per_page' => apply_filters('acfw_query_count', 100),
 		'post_status' => 'publish'
 	));
 
