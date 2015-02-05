@@ -3,7 +3,7 @@
 * Plugin Name: ACF Widgets
 * Plugin URI: http://acfwidgets.com
 * Description: A plugin to easily create widgets for use with ACF and add custom fields to any widget on your site.
-* Version: 1.2
+* Version: 1.3
 * Author: Daron Spence
 * Author URI: http://daronspence.com
 * Text Domain: acfw
@@ -15,7 +15,7 @@ if ( !defined('ABSPATH') ){
 	die();
 }
 
-define( 'ACFW_VERSION', 1.2 );
+define( 'ACFW_VERSION', 1.3 );
 define( 'ACFW_STORE_URL', 'http://acfwidgets.com' );
 define( 'ACFW_ITEM_NAME', 'ACF Widgets' );
 define( 'ACFW_FILE' , __FILE__ );

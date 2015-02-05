@@ -100,12 +100,12 @@ function acfw_check_license(){
 		return;
 	}
 	$api_params = array( 
-		'edd_action'=> 'check_license', 
-		'license' 	=> get_option('acfw_license_key'), 
-		'item_name' => urlencode( ACFW_ITEM_NAME ),
-		'url'       => home_url(),
-		'request_uri' => $_SERVER['REQUEST_URI'],
-		'url_version' => ACFW_VERSION,
+		'edd_action'	=> 'check_license', 
+		'license' 		=> get_option('acfw_license_key'), 
+		'item_name'		=> urlencode( ACFW_ITEM_NAME ),
+		'url'       	=> home_url(),
+		'request_uri' 	=> $_SERVER['REQUEST_URI'],
+		'version' 		=> ACFW_VERSION,
 	);
 	// Call the custom API.
 	$response = wp_remote_get( add_query_arg( $api_params, ACFW_STORE_URL ), array( 'timeout' => 15, 'sslverify' => false ) );
