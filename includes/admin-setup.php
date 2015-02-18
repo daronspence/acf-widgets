@@ -81,7 +81,7 @@ function acfw_how_to_meta_box( $post ) {
 		echo "<p>Add a new field group and set the <i>Location</i> equal to: <b>Widget is equal to {$post->post_title}</b>.</p>";
 		echo "<p>To show this widget in your theme, add a new template file to your theme directory named <strong>widget-{$post->post_name}.php</strong> or <strong>widget-{$post->ID}.php</strong> .</p>";
 		echo "<p>You can show the values from your widgets in your templates by using the following syntax.</p>";
-		echo "<code>&lt;?php the_field(\'YOUR_FIELD_NAME\', \$acfw); ?&gt;</code>";
+		echo "<code>&lt;?php the_field('YOUR_FIELD_NAME', \$acfw); ?&gt;</code>";
 		echo "<p><a href='https://www.youtube.com/watch?v=YRfvqmSQG7o' target='_blank'>Watch Tutorial</a> or <a href='http://acfwidgets.com/support/'>Read More</a></p>";
 	}
 }
