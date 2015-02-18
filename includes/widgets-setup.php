@@ -23,8 +23,8 @@ function acfw_setup_classes(){
 	
 	foreach ($results as $result) :
 		
-		$title = $result->post_title;
-		$description = $result->post_excerpt;
+		$title = esc_attr($result->post_title);
+		$description = esc_attr($result->post_excerpt);
 		$slug = $result->post_name;
 		$id = $result->ID;
 
@@ -41,9 +41,9 @@ function acfw_included_widgets(){
 	if ( !empty($acfw_included_widgets) ) :
 		foreach ( $acfw_included_widgets as $widget ):
 			
-			$title = $widget['title'];
+			$title = esc_attr($widget['title']);
+			$description = esc_attr($widget['description']);
 			$slug = $widget['slug'];
-			$description = $widget['description'];
 			$id = $widget['id'];
 		
 			acfw_widgets_eval($title, $description, $slug, $id);
