@@ -1,6 +1,6 @@
 <?php
 /**
- * Put this stuff in your functions.php file if necessary
+ * Put this stuff in your functions.php file if necessary.
  */
 
 
