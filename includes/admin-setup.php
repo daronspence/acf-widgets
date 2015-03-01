@@ -304,4 +304,12 @@ function acfw_plugins_page_info(){
 	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div style='background: #fcf3ef; padding: 5px 8px; border-left: 4px solid crimson;'><span class='dashicons dashicons-dismiss' style='color: crimson; margin-right: 13px;'></span>{$acfw_message}</div></td></tr>";
 }
 
+
+add_action('admin_head', 'acfw_lite_css');
+function acfw_lite_css(){
+
+	if ( defined('ACFW_LITE') )
+		echo "<style> .acf-field[data-key*='acfw']{ display: none; } </style>";
+
+}
 // End of File
