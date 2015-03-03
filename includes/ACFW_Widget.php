@@ -33,7 +33,7 @@ class ACFW_Widget extends WP_Widget {
 
     function form($instance) {
 
-    	if ( $this->title_filter_exists() ) :
+    	if ( $this->display_titles() ) :
 
 	    	$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ); ?>
 
@@ -67,9 +67,9 @@ class ACFW_Widget extends WP_Widget {
 		
         echo $before_widget ;
 
-        if ( ! empty( $instance['title'] ) && $this->title_filter_exists() ) 
+        if ( ! empty( $instance['title'] ) && $this->display_titles() ) 
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-		elseif ( $this->title_filter_exists() ) 
+		elseif ( $this->display_titles() ) 
 			echo $args['before_title'] . apply_filters( 'widget_title', $this->title ). $args['after_title'];
 
         $acfw = 'widget_' . $widget_id ;
@@ -105,14 +105,24 @@ class ACFW_Widget extends WP_Widget {
     	return $old_classname;
     }   
 
-    private function title_filter_exists() {
+    /**
+     * Check for filter to show/hide Widget Titles by default.
+     * @return bool should titles be displayed?
+     */
+    private function display_titles() {
 
     	if ( apply_filters("show_acfw_titles" , false ) )
     		return true;
+    	elseif ( apply_filters("hide_acfw_titles" , false ) )
+    		return false;
     	elseif ( apply_filters( "show_acfw_title_{$this->slug}", false ) )
     		return true;
+    	elseif ( apply_filters( "hide_acfw_title_{$this->slug}", false ) )
+    		return false;
     	elseif ( apply_filters( "show_acfw_title_{$this->post_id}", false ) )
     		return true;
+    	elseif ( apply_filters( "hide_acfw_title_{$this->post_id}", false ) )
+    		return false;
     	else
     		return false;
 
