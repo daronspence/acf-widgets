@@ -109,7 +109,7 @@ class ACFW_Widget extends WP_Widget {
      * Check for filter to show/hide Widget Titles by default.
      * @return bool should titles be displayed?
      */
-    private function display_titles() {
+    public function display_titles() {
 
     	if ( apply_filters("show_acfw_titles" , false ) )
     		return true;
