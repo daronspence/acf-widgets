@@ -39,6 +39,10 @@ include_once('includes/helper-functions.php');
 
 include_once('includes/admin-setup.php');
 
+require_once('includes/ACFW_Widget.php');
+
+require_once('includes/ACFW_Widget_Factory.php');
+
 include_once('includes/widgets-setup.php');
 
 include_once('includes/default-widgets.php');

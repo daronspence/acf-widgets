@@ -4,7 +4,6 @@
 */
 
 /**
-* @func acfw_location_rules
 * Return an array of rules for use with register_field_group() 'location' key
 * @param array $a
 * @param str $param
@@ -127,57 +126,6 @@ function acfw_plugins_url($dir, $rel){
 	else
 		return plugins_url($dir, $rel);
 }
-
-function acfw_widgets_eval( $title, $description, $slug, $id ){
-	$name = 'Acf_Widget_'.$id;
-
-	// TODO: Rewrite this without using eval()
-	// Though I don't think it's possible...
-	eval("
-		class {$name} extends WP_Widget { 
-			function {$name} () {
-	            \$widget_ops = array(
-	            				'classname' => ' {$name} ',
-	                            'description' => ' {$description} ', 
-	                        );
-	            \$this->WP_Widget('{$name}', '{$title}', \$widget_ops );           
-	        }
-	        function form(\$instance) {
-	        	global \$wp_customize;
-	        	if ( isset(\$wp_customize) ) {
-	        		return;
-	        	}
-				echo '<p class=\'acfw-no-acf\'>You have not added any fields to this widget yet. 
-				<br/><br/><a href=post-new.php?post_type=acf-field-group>Add some now!</a>
-				<br/><br/> Make sure to set the location rules to: <b>Widget : is equal to : {$title} </b></p><br/>';
-				echo '<script type=text/javascript>acfw();</script>';
-	        }
-	        
-	        function update(\$new_instance, \$old_instance) { \$instance = \$old_instance; return \$instance; }
-	        
-	        function widget(\$args, \$instance) {
-				extract(\$args, EXTR_SKIP);
-				
-	            echo \$before_widget ;
-
-	            \$acfw = 'widget_' . \$widget_id ;
-	            
-	            if (locate_template('widget-{$slug}.php') != '') {
-					require(locate_template('widget-{$slug}.php'));
-				} elseif (locate_template('widget-{$id}.php') != '') {
-					require(locate_template('widget-{$id}.php'));
-				} else {
-					echo \"No template found for \$widget_name \";
-				}
-
-	            echo \$after_widget ;
-	        }           
-		}
-		add_action('widgets_init' , 'acfw_register_{$name}');
-		function acfw_register_{$name}(){ register_widget('{$name}'); }
-	"); // end eval();
-
-} // end acfw_widgets_eval();
 
 function acfw_expired_notice(){
 	$url = "options-general.php?page=acfw-options";

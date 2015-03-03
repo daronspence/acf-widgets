@@ -276,9 +276,13 @@ function acfw_admin_notices(){
 	if ( isset($_GET['acfw-dismiss-expired']) && $_GET['acfw-dismiss-expired'] == '1' )
 		update_user_meta( $user_id, 'acfw_dismiss_expired', array(true , ACFW_VERSION) );
 	
-	if ( get_option('acfw_license_status') == 'expired' && !get_user_meta($user_id, 'acfw_dismiss_expired')[0] ){
-		add_action('admin_notices', 'acfw_expired_notice');
-		add_action('network_admin_notices', 'acfw_expired_notice');
+	if ( !empty( get_user_meta($user_id, 'acfw_dismiss_expired')[0] ) ){
+
+		if ( get_option('acfw_license_status') == 'expired' && !get_user_meta($user_id, 'acfw_dismiss_expired')[0] ){
+			add_action('admin_notices', 'acfw_expired_notice');
+			add_action('network_admin_notices', 'acfw_expired_notice');
+		}
+	
 	}
 
 	global $pagenow;
