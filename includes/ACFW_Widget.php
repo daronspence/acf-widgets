@@ -5,7 +5,8 @@ class ACFW_Widget extends WP_Widget {
 	var $title  = '';
 	var $description = '';
 	var $slug = '';
-	var $id = 'acf_widget_'; // keep old name to preserve data
+	var $post_id = 0 ; 
+	var $data_id = 'acf_widget_'; // keep old name to preserve data
 	var $classes = '';
 
 	function __construct ( $params ) {
@@ -13,23 +14,36 @@ class ACFW_Widget extends WP_Widget {
 		$this->title = $params['title'];
 		$this->description = $params['description'];
 		$this->slug = $params['slug'];
-		$this->id .= $params['id'];
+		$this->post_id = $params['id'];
+		$this->data_id .= $this->post_id;
 
 		// Deprecated 
 		$old_classname = $this->old_classname();
 
 		parent::__construct(
-			$this->id, // Base ID
+			$this->data_id,
 			__( $this->title, 'acfw' ), // Name
 			array( 
 				'description' => __( $this->description, 'acfw' ), 
-				'classname' => $this->id . ' ' . $old_classname . $this->classes, // class ID  + custom stuff
+				'classname' => $this->data_id . ' ' . $old_classname . ' ' . $this->classes, // class ID  + custom stuff
 			) // Args
 		);
       
     }
 
     function form($instance) {
+
+    	if ( $this->display_titles() ) :
+
+	    	$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ); ?>
+
+	    	<p>
+				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><span style="font-weight: bold;"><?php _e( 'Title' ); ?></span></label> 
+				<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+	    	</p>
+
+    	<?php endif;
+
     	global $wp_customize;
     	if ( isset($wp_customize) ) {
     		return;
@@ -40,19 +54,30 @@ class ACFW_Widget extends WP_Widget {
 		echo "<script type='text/javascript'> acfw(); </script>";
     }
     
-    function update($new_instance, $old_instance) { $instance = $old_instance; return $instance; }
+    function update($new_instance, $old_instance) { 
+    	$instance = $old_instance; 
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+
+    	return $instance; 
+    }
     
     function widget($args, $instance) {
+
 		extract($args, EXTR_SKIP);
 		
         echo $before_widget ;
+
+        if ( ! empty( $instance['title'] ) && $this->display_titles() ) 
+			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
+		elseif ( $this->display_titles() ) 
+			echo $args['before_title'] . apply_filters( 'widget_title', $this->title ). $args['after_title'];
 
         $acfw = 'widget_' . $widget_id ;
         
         if (locate_template("widget-{$this->slug}.php") != "") {
 			require(locate_template("widget-{$this->slug}.php"));
-		} elseif (locate_template("widget-{$this->id}.php") != "") {
-			require(locate_template("widget-{$this->id}.php"));
+		} elseif (locate_template("widget-{$this->post_id}.php") != "") {
+			require(locate_template("widget-{$this->post_id}.php"));
 		} else {
 			echo "No template found for $widget_name ";
 		}
@@ -67,7 +92,7 @@ class ACFW_Widget extends WP_Widget {
      */
     private function old_classname(){
 
-    	$old_classname = explode( '_' , $this->id );
+    	$old_classname = explode( '_' , $this->data_id );
 
 		foreach ( $old_classname as $key => $value ){
 
@@ -78,7 +103,30 @@ class ACFW_Widget extends WP_Widget {
 		$old_classname = implode('_', $old_classname);
 
     	return $old_classname;
-    }          
+    }   
+
+    /**
+     * Check for filter to show/hide Widget Titles by default.
+     * @return bool should titles be displayed?
+     */
+    public function display_titles() {
+
+    	if ( apply_filters("show_acfw_titles" , false ) )
+    		return true;
+    	elseif ( apply_filters("hide_acfw_titles" , false ) )
+    		return false;
+    	elseif ( apply_filters( "show_acfw_title_{$this->slug}", false ) )
+    		return true;
+    	elseif ( apply_filters( "hide_acfw_title_{$this->slug}", false ) )
+    		return false;
+    	elseif ( apply_filters( "show_acfw_title_{$this->post_id}", false ) )
+    		return true;
+    	elseif ( apply_filters( "hide_acfw_title_{$this->post_id}", false ) )
+    		return false;
+    	else
+    		return false;
+
+    }       
 }
 
 // End of File
