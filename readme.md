@@ -1,4 +1,12 @@
-ACF Widgets
+# ACF Widgets 
+
+Beta Testers: *New!*
+
+If you want to beta test, you can install the plugin from the master branch. I may move over to a develop branch in the future, but for now, master it is. If everything is ok with the plugin, head [over here](http://acfwidgets.com/support/topic/v1-4/) and leave a nice comment. Otherwise, [open an issue](https://github.com/Daronspence/acf-widgets/issues) here on GitHub.
+
+Thanks!
+
+*You will now be returned to the scheduled programming.*
 
 ACF Widgets (ACFW) allows users to easily create widgets to use with ACF. With ACFW, you can easily create new widgets without touching any code. No PHP classes or dealing with the Widgets API. After you create a widget, you can assign custom fields within ACF and then use theme templates to easily show the custom fields.
 
