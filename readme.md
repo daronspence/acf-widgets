@@ -4,6 +4,8 @@ Beta Testers: *New!*
 
 If you want to beta test, you can install the plugin from the master branch. I may move over to a develop branch in the future, but for now, master it is. If everything is ok with the plugin, head [over here](http://acfwidgets.com/support/topic/v1-4/) and leave a nice comment. Otherwise, [open an issue](https://github.com/Daronspence/acf-widgets/issues) here on GitHub.
 
+I think it goes without saying, but make a backup of your database before you upgrade, or use a testing server.
+
 Thanks!
 
 *You will now be returned to the scheduled programming.*
