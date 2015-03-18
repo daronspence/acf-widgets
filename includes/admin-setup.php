@@ -151,7 +151,7 @@ function acfw_options_page(){
 					 <div class="postbox">
 						<h3 class="hndle">License Key</h3>
 						<div style="padding: 0 15px 15px;">
-							<p>Enter your license key below. To deactivate your license, simply remove your license and update this options page. Your old license will be deactivated automatically. Please note, an invalid license key will also deactivate your previous license.</p>
+							<p>Enter your license key below.</p>
 							<input type="text" name="acfwlicensekey" style="min-width: 100%;" value="<?php echo $key; ?>">
 							<?php
 							if ($status == 'failed'){
@@ -272,13 +272,19 @@ function acfw_admin_notices(){
 
 	global $current_user;
 	$user_id = $current_user->ID;
+	$dismissed = get_user_meta($user_id, 'acfw_dismiss_expired');
+
+	if ( !empty($dismissed) ) {
+		if ( $dismissed[0] !== ACFW_VERSION ) // Show expired message if they updated the plugin
+			delete_user_meta( $user_id, 'acfw_dismiss_expired' );
+	}
 
 	if ( isset($_GET['acfw-dismiss-expired']) && $_GET['acfw-dismiss-expired'] == '1' )
-		update_user_meta( $user_id, 'acfw_dismiss_expired', array(true , ACFW_VERSION) );
+		update_user_meta( $user_id, 'acfw_dismiss_expired', ACFW_VERSION );
 	
-	if ( !empty( get_user_meta($user_id, 'acfw_dismiss_expired')[0] ) ){
+	if ( empty( get_user_meta($user_id, 'acfw_dismiss_expired') ) ){
 
-		if ( get_option('acfw_license_status') == 'expired' && !get_user_meta($user_id, 'acfw_dismiss_expired')[0] ){
+		if ( get_option('acfw_license_status') == 'expired' && ! $dismissed ){
 			add_action('admin_notices', 'acfw_expired_notice');
 			add_action('network_admin_notices', 'acfw_expired_notice');
 		}

@@ -56,7 +56,7 @@ class ACFW_Widget extends WP_Widget {
     
     function update($new_instance, $old_instance) { 
     	$instance = $old_instance; 
-		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+		$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( trim( $new_instance['title'] ) ) : '';
 
     	return $instance; 
     }
@@ -69,8 +69,6 @@ class ACFW_Widget extends WP_Widget {
 
         if ( ! empty( $instance['title'] ) && $this->display_titles() ) 
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
-		elseif ( $this->display_titles() ) 
-			echo $args['before_title'] . apply_filters( 'widget_title', $this->title ). $args['after_title'];
 
         $acfw = 'widget_' . $widget_id ;
         
