@@ -282,7 +282,7 @@ function acfw_admin_notices(){
 	if ( isset($_GET['acfw-dismiss-expired']) && $_GET['acfw-dismiss-expired'] == '1' )
 		update_user_meta( $user_id, 'acfw_dismiss_expired', ACFW_VERSION );
 	
-	if ( empty( get_user_meta($user_id, 'acfw_dismiss_expired') ) ){
+	if ( empty( $dismissed ) ){
 
 		if ( get_option('acfw_license_status') == 'expired' && ! $dismissed ){
 			add_action('admin_notices', 'acfw_expired_notice');
