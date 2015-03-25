@@ -129,8 +129,10 @@ function acfw_plugins_url($dir, $rel){
 
 function acfw_expired_notice(){
 	$url = "options-general.php?page=acfw-options";
-	if ( is_multisite() )
-		$url = "settings.php?page=acfw-options";
+	if ( !is_multisite() ){
+		$url = network_admin_url();
+		$url = trailingslashit($url) . "settings.php?page=acfw-options";
+	}
 ob_start(); ?>
 	<div class="error">
         <p>Your copy of ACF Widgets is expired. Please <a href="<?php echo $url; ?>">renew your license</a> to continue recieving updates. <a href="<?php echo add_query_arg( 'acfw-dismiss-expired', 1 ); ?>" style="text-decoration: none;"><i class="dashicons dashicons-dismiss" style="font-size: inherit; padding-top: 3px;"></i>Dismiss</a></p>

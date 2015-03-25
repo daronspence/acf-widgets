@@ -35,7 +35,7 @@ class ACFW_Widget extends WP_Widget {
 
     	if ( $this->display_titles() ) :
 
-	    	$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ); ?>
+	    	$title = esc_attr( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base ); ?>
 
 	    	<p>
 				<label for="<?php echo $this->get_field_id( 'title' ); ?>"><span style="font-weight: bold;"><?php _e( 'Title' ); ?></span></label> 
