@@ -24,7 +24,7 @@ function acfw_admin_css(){
 add_action('init', 'acfw_register_cpt');
 function acfw_register_cpt() {
 	$menu_location = 'themes.php';
-	if (defined('ACFW_LITE'))
+	if ( defined('ACFW_LITE') || !current_user_can( 'manage_options' ) )
 		$menu_location = false;
 	
 	register_post_type('acf-widgets', array(
@@ -105,7 +105,7 @@ function acfw_support_meta_box_html(){ ?>
 add_action('admin_menu','acfw_menu_items');
 add_action('network_admin_menu', 'acfw_menu_items');
 function acfw_menu_items(){
-	if ( !defined('ACFW_LITE') ){
+	if ( !defined('ACFW_LITE') && current_user_can('manage_options') ){
 		add_options_page( 'ACFW Options', 'ACFW Options', 'edit_posts', 'acfw-options', 'acfw_options_page' );
 		if ( is_network_admin() )
 			add_submenu_page( 'settings.php', 'ACFW Options', 'ACFW Options', 'edit_posts', 'acfw-options', 'acfw_options_page' );
@@ -208,6 +208,9 @@ function acfw_options_page(){
 // Place ACFW after Appearance > Widgets
 add_action('admin_menu', 'acfw_edit_admin_menu', 10);
 function acfw_edit_admin_menu(){
+	if ( !current_user_can('manage_options') )
+		return;
+
 	global $submenu;
 	$widgets_postion[7] = $submenu['themes.php'][7]; // preserve key for widgets.php
 	$widgets_postion[] = array_pop($submenu['themes.php']);
@@ -284,7 +287,7 @@ function acfw_admin_notices(){
 	
 	if ( empty( $dismissed ) ){
 
-		if ( get_option('acfw_license_status') == 'expired' && ! $dismissed ){
+		if ( get_option('acfw_license_status') == 'expired' && ! $dismissed && current_user_can('update_plugins') ){
 			add_action('admin_notices', 'acfw_expired_notice');
 			add_action('network_admin_notices', 'acfw_expired_notice');
 		}
