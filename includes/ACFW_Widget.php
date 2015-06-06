@@ -71,8 +71,16 @@ class ACFW_Widget extends WP_Widget {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 
         $acfw = 'widget_' . $widget_id ;
+
+        $custom_template_dir = trailingslashit( apply_filters( 'acfw_custom_template_dir', get_template_directory_uri() ) );
+
+        var_dump( $custom_template_dir . "widget-{$this->slug}.php" );
         
-        if (locate_template("widget-{$this->slug}.php") != "") {
+        if ( file_exists( $custom_template_dir . "widget-{$this->slug}.php" ) ) {
+            require( $custom_template_dir . "widget-{$this->slug}.php" );
+        } elseif ( file_exists( $custom_template_dir . "widget-{$this->post_id}.php" ) ){
+            require( $custom_template_dir . "widget-{$this->post_id}.php" );
+        } elseif (locate_template("widget-{$this->slug}.php") != "") {
 			require(locate_template("widget-{$this->slug}.php"));
 		} elseif (locate_template("widget-{$this->post_id}.php") != "") {
 			require(locate_template("widget-{$this->post_id}.php"));
