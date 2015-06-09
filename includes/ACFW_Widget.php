@@ -74,7 +74,7 @@ class ACFW_Widget extends WP_Widget {
 
         $custom_template_dir = trailingslashit( apply_filters( 'acfw_custom_template_dir', get_template_directory_uri() ) );
 
-        var_dump( $custom_template_dir . "widget-{$this->slug}.php" );
+       // var_dump( $custom_template_dir . "widget-{$this->slug}.php" );
         
         if ( file_exists( $custom_template_dir . "widget-{$this->slug}.php" ) ) {
             require( $custom_template_dir . "widget-{$this->slug}.php" );
