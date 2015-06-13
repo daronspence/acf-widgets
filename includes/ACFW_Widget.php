@@ -45,13 +45,28 @@ class ACFW_Widget extends WP_Widget {
     	<?php endif;
 
     	global $wp_customize;
+
     	if ( isset($wp_customize) ) {
-    		return;
-    	}
-		echo "<p class='acfw-no-acf'>You have not added any fields to this widget yet. 
-		<br/><br/><a href=post-new.php?post_type=acf-field-group>Add some now!</a>
-		<br/><br/> Make sure to set the location rules to: <b>Widget : is equal to : {$this->title} </b></p>";
-		echo "<script type='text/javascript'> acfw(); </script>";
+    		return; // bail early if we're in the customizer
+    	} ?>
+
+            <p class='acfw-no-acf'><?php _e( 'You have not added any fields to this widget yet.', 'acfw' ); ?>
+
+                <br/><br/>
+
+                <a href='post-new.php?post_type=acf-field-group'><?php _e( 'Add some now!', 'acfw' ); ?></a>
+
+                <br/><br/>
+
+                <?php _e( 'Make sure to set the location rules to:', 'acfw' ); ?>
+                
+                <b><?php _e( 'Widget : is equal to : ', 'acfw' ); echo $this->title; ?></b>
+
+            </p>
+
+            <script type='text/javascript'> acfw();</script>
+
+        <?php
     }
     
     function update($new_instance, $old_instance) { 
