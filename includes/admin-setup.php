@@ -212,6 +212,11 @@ function acfw_edit_admin_menu(){
 		return;
 
 	global $submenu;
+
+	if ( empty( $submenu['themes.php'][7] ) ){
+	    return; // return if the default menu structure has been modified
+	}
+
 	$widgets_postion[7] = $submenu['themes.php'][7]; // preserve key for widgets.php
 	$widgets_postion[] = array_pop($submenu['themes.php']);
 	// Splice and preserve keys
