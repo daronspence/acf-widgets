@@ -39,7 +39,7 @@ class ACFW_Widget_Factory extends WP_Widget_Factory {
 		trigger_error( "No serialization allowed!", E_USER_ERROR );
 	}
 
-	protected function __construct() {
+	public function __construct() {
 		parent::__construct();
 	}
 
