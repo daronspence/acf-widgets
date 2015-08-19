@@ -142,7 +142,7 @@ function acfw_options_page(){
 
 	?>
 <div class="wrap">
-	<h2>ACFW Options</h2>
+	<h1>ACFW Options</h1>
 	<form name="acfw-options" method="post" action="?page=<?php echo $_GET['page']; ?>&updated=1">
     <?php wp_nonce_field( 'acfw_options_nonce' ); ?>
 		<div id="poststuff">
