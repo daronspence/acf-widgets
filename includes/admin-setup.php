@@ -116,14 +116,24 @@ function acfw_options_page(){
 		if ( wp_verify_nonce( $_POST['_wpnonce'], 'acfw_options_nonce' ) ){
 
 			// LICENSE STUFF //
-			if ( isset($_POST['deactivate']) ){
+			if ( isset( $_POST['deactivate'] ) ){
+
 				acfw_deactivate_license();
 				update_option( 'acfw_license_key', '');
-			} elseif ( isset($_POST['activate']) ){ 
+
+			} elseif ( isset( $_POST['activate'] ) ){ 
+
 				$status = acfw_activate_license(trim($_POST['acfwlicensekey']));
-				if ( $status->license != 'invalid' || $status->error == 'expired')
-					update_option( 'acfw_license_key', trim($_POST['acfwlicensekey']) );
-			} 
+
+				if ( $status->license != 'invalid' || $status->error == 'expired'){
+					update_option( 'acfw_license_key', trim( $_POST['acfwlicensekey'] ) );
+				}
+
+				if ( $status->success === false && $status->error === 'no_activations_left' ){
+					$error_message = __( 'You have no activations remaining.', 'acfw' );
+				}
+
+			}
 
 			// DEBUG STUFF //
 			if ( isset($_POST['acfwdebug']) ){
@@ -161,6 +171,9 @@ function acfw_options_page(){
 								echo '<p>While your license is either deactivated or invalid, you will not recieve any updates.</p>';
 							}
 							echo '<p>' . 'License Key: ' . "<span class='{$status}'>" . $status . '</span></p>';
+							if ( isset( $error_message ) ){
+								echo "<p><span class='{$status}'>" . $error_message . "</span></p>";
+							}
 							if( $count === '0' && ($status == 'expired' || $status == 'valid') ){
 								echo '<p>You have no more licenses remaining. Consider <a href="http://acfwidgets.com/checkout/purchase-history/">deactivating some</a> or <a href="http://acfwidgets.com/checkout?edd_action=add_to_cart&download_id=13&edd_options[price_id]=3">purchasing a developers license</a>.</p>';
 							} elseif ( $count == 'unlimited' && ($status == 'expired' || $status == 'valid') ){
