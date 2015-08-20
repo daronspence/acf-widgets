@@ -149,6 +149,7 @@ function acfw_options_page(){
 
 	$status = get_option('acfw_license_status');
 	$count = get_option('acfw_license_count');
+	$key_input_type = strlen( $key ) > 0 ? 'password' : 'text';
 
 	?>
 <div class="wrap">
@@ -162,7 +163,7 @@ function acfw_options_page(){
 						<h3 class="hndle">License Key</h3>
 						<div style="padding: 0 15px 15px;">
 							<p>Enter your license key below.</p>
-							<input type="text" name="acfwlicensekey" style="min-width: 100%;" value="<?php echo $key; ?>">
+							<input type="<?php echo $key_input_type; ?>" name="acfwlicensekey" style="min-width: 100%;" value="<?php echo $key; ?>">
 							<?php
 							if ($status == 'failed'){
 								$status = 'deactivated';
