@@ -77,12 +77,7 @@ function acfw_how_to_meta_box( $post ) {
 	if ($title == ''){
 		_e('For more information, give your widget a title, then Publish or Update this page.', 'acfw');
 	} else {
-		echo "<p>Before you can use this widget, you will need to <a href='edit.php?post_type=acf-field-group'>add some custom fields</a> to it.</p>";
-		echo "<p>Add a new field group and set the <i>Location</i> equal to: <b>Widget is equal to {$post->post_title}</b>.</p>";
-		echo "<p>To show this widget in your theme, add a new template file to your theme directory named <strong>widget-{$post->post_name}.php</strong> or <strong>widget-{$post->ID}.php</strong> .</p>";
-		echo "<p>You can show the values from your widgets in your templates by using the following syntax.</p>";
-		echo "<code>&lt;?php the_field('YOUR_FIELD_NAME', \$acfw); ?&gt;</code>";
-		echo "<p><a href='https://www.youtube.com/watch?v=YRfvqmSQG7o' target='_blank'>Watch Tutorial</a> or <a href='http://acfwidgets.com/support/'>Read More</a></p>";
+		include( 'views/how-to-meta-box.php' );	
 	}
 }
 
@@ -90,16 +85,19 @@ function acfw_how_to_meta_box( $post ) {
 
 // ACFW Support Meta Box
 add_action('add_meta_boxes_acf-widgets', 'acfw_support_meta_box');
+
 function acfw_support_meta_box(){
+
 	add_meta_box('acfw-support', __('Support', 'acfw'), 'acfw_support_meta_box_html', 'acf-widgets', 'side');
+
 }
-function acfw_support_meta_box_html(){ ?>
-	<h4><?php _e('General Support'); ?></h4>
-	<p><?php printf(__('Check out the official %s Support Forums %s', 'acfw'), '<a href="http://acfwidgets.com/support/">', '</a>'); ?></p>
-	<hr />
-	<h4><?php _e('Looking for Priority Support?', 'acfw'); ?></h4>
-	<p><?php printf(__('Check out the %s Priority Support Forums %s', 'acfw'), '<a href="http://acfwidgets.com/support/forum/priority-support/">', '</a>'); ?></p>
-<?php } // End Support Meta Box
+
+function acfw_support_meta_box_html(){
+
+	include( 'views/support-meta-box.php' );
+
+}
+// End Support Meta Box
 
 // Add ACFW Options Page
 add_action('admin_menu','acfw_menu_items');
@@ -202,11 +200,7 @@ function acfw_options_page(){
 					<div class="postbox">
 						<h3 class="hndle">Support</h3>
 						<div style="padding: 0 15px 15px;">
-							<h4><?php _e('General Support'); ?></h4>
-							<p><?php printf(__('Check out the official %s Support Forums %s', 'acfw'), '<a href="http://acfwidgets.com/support/">', '</a>'); ?></p>
-							<hr />
-							<h4><?php _e('Looking for Priority Support?', 'acfw'); ?></h4>
-							<p><?php printf(__('Check out the %s Priority Support Forums %s', 'acfw'), '<a href="http://acfwidgets.com/support/forum/priority-support/">', '</a>'); ?></p>
+							<?php include( 'views/support-meta-box.php' ); ?>
 						</div>
 					</div>
 				</div>
@@ -239,11 +233,14 @@ function acfw_edit_admin_menu(){
 
 // Custom Columns For ACFW CPT
 add_action( 'manage_acf-widgets_posts_custom_column' , 'acfw_custom_column', 10, 2 );
-add_filter('manage_acf-widgets_posts_columns' , 'acfw_add_columns');
+
 function acfw_custom_column($column, $post_id){
 	$name = get_post( $post_id )->post_name;
 	echo '<code>widget-' . $name . '.php</code>';
 }
+
+add_filter('manage_acf-widgets_posts_columns' , 'acfw_add_columns');
+
 function acfw_add_columns($columns){
 	unset($columns['date']);
 	$columns['template'] = __('Theme Template', 'acfw');
@@ -255,7 +252,7 @@ add_filter('enter_title_here', 'acfw_cpt_title');
 function acfw_cpt_title( $title ){
 	$screen = get_current_screen();
 	if ('acf-widgets' == $screen->post_type){
-		$title = 'Enter widget name';
+		$title = __('Enter widget name', 'acfw' );
 	} return $title;
 } // End acfw_cpt_title()
 

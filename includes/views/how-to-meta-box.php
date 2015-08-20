@@ -1,0 +1,6 @@
+<p><?php printf( __( 'Before you can use this widget, you will need to %s add some custom fields %s to it.', 'acfw' ), '<a href="edit.php?post_type=acf-field-group">', '</a>' ); ?></p>
+<p><?php printf( __( 'Add a new field group and set the %s Location %s equal to: %s Widget is equal to %s %s .', 'acfw' ), '<i>', '</i>', '<b>', $post->post_title, '</b>' ); ?></p>
+<p><?php printf( __( 'To show this widget in your theme, add a new template file to your theme directory named %s or %s .', 'acfw' ), '<strong>widget-' . $post->post_name . '.php</strong>', '<strong>widget-' . $post->ID . '.php</strong>' ); ?></p>
+<p><?php _e( 'You can show the values from your widgets in your templates by using the following syntax.', 'acfw' ); ?></p>
+<code>&lt;?php the_field( '<?php _e( 'YOUR_FIELD_NAME', 'acfw' ); ?>', $acfw ); ?&gt;</code>
+<p><a href='https://www.youtube.com/watch?v=YRfvqmSQG7o' target='_blank'><?php _e( 'Watch Tutorial', 'acfw' ); ?></a> <?php _e( 'or', 'acfw' ); ?> <a href='http://acfwidgets.com/support/'><?php _e( 'Read More', 'acfw' ); ?></a></p>
