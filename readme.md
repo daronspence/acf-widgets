@@ -12,7 +12,7 @@ Install:
 * Create a new field group in ACF. Assign it to the type, "widget" -> "Your widget name".
 * Add any fields you want to attach to your new widget.
 * Add the widget to a sidebar and fill in your fields.
-* Create a new file in your theme directory named "widget-your-widget-slug.php". Alternatively, you can name the template file "widget-id.php" where id is the post id of the widget. (note: "widget-" must be prefixed before the slug of your widget name.)
+* Create a new file in your theme directory named `widget-mycool-slug.php`. Alternatively, you can name the template file `widget-id.php` where id is the post id of the widget. (note: `widget-` must be prefixed before the slug of your widget name.)
 * NEW! Copy one of the convenient templates from the "templates" directory included in this plugin to your theme folder.
 * In your newly created template files, call the fields using the normal methods. See http://www.advancedcustomfields.com/resources/get-values-widget/ for more info. 
  - Example. `<?php the_field( 'custom_field', $acfw ); ?>` The `$acfw` variable is automatically mapped for you to use.
