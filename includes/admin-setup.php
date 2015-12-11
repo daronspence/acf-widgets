@@ -326,11 +326,11 @@ function acfw_plugins_page_info(){
 	$acfw_message = '';
 
 	if ( $status == 'expired' )
-		$acfw_message .= 'Your ACFW license is expired. <a href="http://acfwidgets.com/checkout/?edd_license_key='. $key .'&download_id=13" target="_blank">Renew it now</a> to continue receiving updates &amp; support. Contact your web developer for more information.';
+		$acfw_message .= 'Your ACFW license is expired. <a href="http://acfwidgets.com/checkout/?edd_license_key='. $key .'&download_id=13" target="_blank">Renew it now</a> to continue receiving updates &amp; support.';
 	if ( ($status == 'invalid' || $key == '') && !defined('ACFW_LITE') )
 		$acfw_message .= 'It seems like there is a problem with your ACFW license. Check your options in <i>Settings &gt; ACFW Options</i>';
 	
-	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div style='background: #fcf3ef; padding: 5px 8px; border-left: 4px solid crimson;'><span class='dashicons dashicons-dismiss' style='color: crimson; margin-right: 13px;'></span>{$acfw_message}</div></td></tr>";
+	echo "<tr class='plugin-update-tr'><td class='plugin-update' colspan='{$wp_list_table->get_column_count()}'><div class='update-message'>{$acfw_message}</div></td></tr>";
 }
 
 
