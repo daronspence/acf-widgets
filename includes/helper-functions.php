@@ -129,7 +129,7 @@ function acfw_plugins_url($dir, $rel){
 
 function acfw_expired_notice(){
 	$url = "options-general.php?page=acfw-options";
-	if ( !is_multisite() ){
+	if ( is_multisite() ){
 		$url = network_admin_url();
 		$url = trailingslashit($url) . "settings.php?page=acfw-options";
 	}
