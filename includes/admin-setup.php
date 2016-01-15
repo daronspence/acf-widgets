@@ -278,7 +278,7 @@ function acfw_update_slug( $data, $postarr ) {
 // Check license once on login
 add_action('wp_login', 'acfw_login_check', 10, 2);
 function acfw_login_check($login, $user){
-	if ( $user->allcaps['update_plugins'] && !defined('ACFW_INCLUDE') ){
+	if ( isset( $user->allcaps['update_plugins'] ) && $user->allcaps['update_plugins'] && ! defined('ACFW_INCLUDE') ){
 		acfw_check_license();
 	}
 } // end login license check
