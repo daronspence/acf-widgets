@@ -63,6 +63,11 @@ function acfw_wp_defaults( $params ) {
 add_action('init', 'acfw_register_field_group');
 function acfw_register_field_group(){	
 
+	// Bail in WP CLI
+	if ( defined( 'WP_CLI' ) && WP_CLI ){
+		return;
+	}
+
 	// vars
 	$default_widgets = $GLOBALS['acfw_default_widgets'];
 	// Render location for default widgets
@@ -116,6 +121,12 @@ function acfw_register_field_group(){
 // Add ACFW to non-WP widgets
 add_action('init', 'acfw_other_widgets');
 function acfw_other_widgets(){
+	
+	// Bail in WP CLI
+	if ( defined( 'WP_CLI' ) && WP_CLI ){
+		return;
+	}
+
 	// vars
 	$installed_widgets = $GLOBALS['wp_widget_factory']->widgets;
 	$default_widgets = $GLOBALS['acfw_default_widgets'];
