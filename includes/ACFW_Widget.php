@@ -25,7 +25,7 @@ class ACFW_Widget extends WP_Widget {
 			__( $this->title, 'acfw' ), // Name
 			array( 
 				'description' => __( $this->description, 'acfw' ), 
-				'classname' => $this->data_id . ' ' . $old_classname . ' ' . $this->classes, // class ID  + custom stuff
+				'classname' => $this->slug . ' ' . $this->data_id . ' ' . $old_classname . ' ' . $this->classes, // class ID  + custom stuff
 			) // Args
 		);
       
