@@ -15,7 +15,7 @@ if ( !defined('ABSPATH') ){
 	die();
 }
 
-define( 'ACFW_VERSION', '1.8 );
+define( 'ACFW_VERSION', '1.8' );
 define( 'ACFW_STORE_URL', 'http://acfwidgets.com' );
 define( 'ACFW_ITEM_NAME', 'ACF Widgets' );
 define( 'ACFW_FILE' , __FILE__ );
