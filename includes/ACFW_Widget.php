@@ -132,17 +132,17 @@ class ACFW_Widget extends WP_Widget {
      */
     public function display_titles() {
 
-    	if ( apply_filters("show_acfw_titles" , false ) )
+        if ( apply_filters( "show_acfw_title_{$this->slug}", false ) )
+            return true;
+        elseif ( apply_filters( "hide_acfw_title_{$this->slug}", false ) )
+            return false;
+        elseif ( apply_filters( "show_acfw_title_{$this->post_id}", false ) )
+            return true;
+        elseif ( apply_filters( "hide_acfw_title_{$this->post_id}", false ) )
+            return false;
+    	elseif ( apply_filters( "show_acfw_titles" , false ) )
     		return true;
-    	elseif ( apply_filters("hide_acfw_titles" , false ) )
-    		return false;
-    	elseif ( apply_filters( "show_acfw_title_{$this->slug}", false ) )
-    		return true;
-    	elseif ( apply_filters( "hide_acfw_title_{$this->slug}", false ) )
-    		return false;
-    	elseif ( apply_filters( "show_acfw_title_{$this->post_id}", false ) )
-    		return true;
-    	elseif ( apply_filters( "hide_acfw_title_{$this->post_id}", false ) )
+    	elseif ( apply_filters( "hide_acfw_titles" , false ) )
     		return false;
     	else
     		return false;
