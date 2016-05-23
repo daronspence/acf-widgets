@@ -32,7 +32,7 @@ function acfw_globals(){
 include_once('includes/acf-404.php');
 
 
-$acfw_default_widgets = array('pages', 'calendar', 'archives', 'meta', 'search', 'text', 
+$GLOBALS['acfw_default_widgets'] = array('pages', 'calendar', 'archives', 'meta', 'search', 'text', 
 	'categories', 'recent-posts', 'recent-comments', 'rss', 'tag_cloud', 'nav_menu');
 
 include_once('includes/helper-functions.php');
