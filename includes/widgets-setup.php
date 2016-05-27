@@ -8,9 +8,11 @@ if ( !defined('ABSPATH') ){
 	die();	
 }
 
-// $GLOBALS['wp_widget_factory'] is created just before 'setup_theme' hook is called
+// $GLOBALS['wp_widget_factory'] is created just before 'after_setup_theme' hook is called 
+// but after the theme functions.php is read
+// This fires late enough so you can include ACFW in a theme
 // @see wp-settings.php
-add_action('setup_theme', 'acfw_widget_factory_load', 0, 0);
+add_action('after_setup_theme', 'acfw_widget_factory_load', 0, 0);
 function acfw_widget_factory_load() {
 	$GLOBALS['wp_widget_factory'] = ACFW_Widget_Factory::get_instance();
 }
