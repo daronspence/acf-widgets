@@ -1,0 +1,24 @@
+{
+  "name": "Daronspence/acf-widgets",
+  "description": "A plugin to easily create widgets for use with ACF and add custom fields to any widget on your site.",
+  "version": "1.10",
+  "license": "GPL2+",
+  "type": "wordpress-plugin",
+  "keywords": [
+    "acf",
+    "advanced custom fields",
+    "widgets",
+    "sidebar"
+  ],
+  "homepage": "https://acfwidgets.com/",
+  "authors": [
+    {
+      "name": "Daron Spence",
+      "email": "daronspence@gmail.com",
+      "role": "Lead Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://acfwidgets.com/support/"
+  }
+}
