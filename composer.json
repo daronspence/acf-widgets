@@ -1,7 +1,7 @@
 {
   "name": "Daronspence/acf-widgets",
   "description": "A plugin to easily create widgets for use with ACF and add custom fields to any widget on your site.",
-  "version": "1.10",
+  "version": "1.11",
   "license": "GPL2+",
   "type": "wordpress-plugin",
   "keywords": [
