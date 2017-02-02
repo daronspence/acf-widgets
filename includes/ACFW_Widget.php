@@ -42,13 +42,7 @@ class ACFW_Widget extends WP_Widget {
 				<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 	    	</p>
 
-    	<?php endif;
-
-    	global $wp_customize;
-
-    	if ( isset($wp_customize) ) {
-    		return; // bail early if we're in the customizer
-    	} ?>
+    	<?php endif; ?>
 
             <p class='acfw-no-acf'><?php _e( 'You have not added any fields to this widget yet.', 'acfw' ); ?>
 

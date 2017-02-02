@@ -148,17 +148,6 @@ function acfw_go_back($widget){
 <?php endif;
 }
 
-add_action('init', 'acfw_remove_fields');
-function acfw_remove_fields(){
-	global $wp_customize;
-	if ( isset($wp_customize ) ){
-		acfw_remove_object_filter('in_widget_form', 'acf_form_widget', 'edit_widget', 10);
-		add_action('in_widget_form', 'acfw_go_back', 1, 1);
-	} else {
-		return;
-	}
-}
-
 // See http://wordpress.stackexchange.com/questions/137688/remove-actions-filters-added-via-anonymous-functions
 function acfw_remove_object_filter( $tag, $class, $method = NULL, $priority = NULL ) {
 	$filters = $GLOBALS['wp_filter'][ $tag ];
