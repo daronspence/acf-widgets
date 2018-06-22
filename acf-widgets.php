@@ -3,7 +3,7 @@
 * Plugin Name: ACF Widgets
 * Plugin URI: https://acfwidgets.com
 * Description: A plugin to easily create widgets for use with ACF and add custom fields to any widget on your site.
-* Version: 1.11
+* Version: 1.12
 * Tested up to: 4.9
 * Author: Daron Spence
 * Author URI: http://acfwidgets.com
