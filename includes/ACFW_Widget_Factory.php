@@ -15,7 +15,12 @@ class ACFW_Widget_Factory extends WP_Widget_Factory {
 		if ( !empty($params) ) {
 			$key .= '_' . $params['id'];
 		}
-		$this->widgets[$key] = new $widget_class($params);
+		
+		if ( apply_filters( 'acfw_should_register_widget_in_acfw_widget_factory', true, $widget_class, $params ) ){
+			$this->widgets[$key] = new $widget_class($params);
+		} else {
+			do_action( 'acfw_register_widget_in_acfw_widget_factory', $widget_class, $params );
+		}
 	}
 
 
