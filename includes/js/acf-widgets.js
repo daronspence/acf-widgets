@@ -4,7 +4,7 @@ function acfw(){
 	var body = jQuery('body');
 	num = el.length;
 	if ( num > 0 ){
-		var remove = el.siblings('.acfw-no-acf');
+		var remove = el.closest('.widget-content').children('.acfw-no-acf');
 		remove.attr('data-display', 'none');
 	}
 }
