@@ -15,7 +15,9 @@ class ACFW_Widget_Factory extends WP_Widget_Factory {
 		if ( !empty($params) ) {
 			$key .= '_' . $params['id'];
 		}
-		$this->widgets[$key] = new $widget_class($params);
+		if ( !is_object( $key ) ) {
+			$this->widgets[$key] = new $widget_class($params);
+		}
 	}
 
 
