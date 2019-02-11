@@ -72,9 +72,21 @@ function acfw_register_field_group(){
 	$default_widgets = $GLOBALS['acfw_default_widgets'];
 	// Render location for default widgets
 	$df_widgets = acfw_location_rules($default_widgets, 'widget', '==', true);
+
+	$acf_version = '5.0.0';
+
+	if ( function_exists('acf') ){
+		$acf_version =  acf()->version;
+	}
+
+	if ( version_compare($acf_version, '5.7.10', '>=') ){
+		$register_field_group_function = 'acf_add_local_field_group';
+	} else {
+		$register_field_group_function = 'register_field_group';
+	}
 	
-	if ( function_exists('get_field') ):
-	register_field_group(array (
+	if ( class_exists('ACF') ):
+	$register_field_group_function(array (
 		'key' => 'group_acfw_default_widget',
 		'title' => 'ACF Widgets Location',
 		'fields' => array (
@@ -150,9 +162,21 @@ function acfw_other_widgets(){
 	$all = array( 'param' => 'widget', 'operator' => '==', 'value' => 'all' );
 	array_push($removed_widgets[0], $all);
 
+	$acf_version = '5.0.0';
+	
+	if ( function_exists('acf') ){
+		$acf_version =  acf()->version;
+	}
+	
+	if ( version_compare($acf_version, '5.7.10', '>=') ){
+		$register_field_group_function = 'acf_add_local_field_group';
+	} else {
+		$register_field_group_function = 'register_field_group';
+	}
+	
 	// Register ACFW Field for all other Widgets
-	if ( function_exists('get_field') ):
-	register_field_group(array (
+	if ( class_exists('ACF') ):
+	$register_field_group_function(array (
 		'key' => 'group_acfw_other_widgets',
 		'title' => 'Other Widgets',
 		'fields' => array (
